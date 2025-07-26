@@ -42,7 +42,26 @@ def roastPdf():
         return jsonify(error="No text found in PDF"), 400
 
 
-    prompt=f"Roast this resume in a harsh and sarcastic way but constructively: {full_text}"
+    prompt = f"""
+Roast this resume in a harsh and sarcastic way but constructively.
+
+Requirements:
+- Keep it concise (3 paragraphs max for the roast)
+- Start with an overall roast (2 paragraph)
+- Follow with 3-4 specific constructive criticisms (bullet points format)
+- Don't let it be too short or too long
+- Be direct and punchy, not verbose 
+- Focus on the most glaring issues
+- Use simple, everyday words the average high-schooler can understand!!
+- Use **bold** bullet point titles
+- Use _italic_ for emphasis and subtle points, don't use single asterisks
+- Avoid jargon or complex terms
+- Don't use too much /n or /n/n
+
+Resume text:
+{full_text}
+"""
+
 
     response=client.models.generate_content(
         model="gemini-2.5-flash-lite",
