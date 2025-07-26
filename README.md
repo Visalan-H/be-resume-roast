@@ -1,28 +1,84 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+# Resume Roaster Backend 🔥
 
-# Flask + Vercel
+Flask-based backend API for the Resume Roaster application, powered by Google Gemini AI for resume analysis.
 
-This example shows how to use Flask 3 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+## Features
 
-## Demo
+- **PDF Text Extraction**: Extracts text from PDF resumes using PyMuPDF
+- **AI-Powered Analysis**: Uses Google Gemini 2.5 Flash Lite for resume roasting
+- **Constructive Feedback**: Generates sarcastic yet helpful criticism
+- **Text Formatting**: Supports rich text formatting in responses
+- **CORS Support**: Configured for cross-origin requests from frontend
+- **File Validation**: Ensures only valid PDF files are processed
 
-https://flask-python-template.vercel.app/
+## Tech Stack
 
-## How it Works
+- **Flask** - Lightweight Python web framework
+- **Google Gemini AI** - Advanced language model for analysis
+- **PyMuPDF (fitz)** - PDF text extraction library
 
-This example uses the Web Server Gateway Interface (WSGI) with Flask to enable handling requests on Vercel with Serverless Functions.
+## Project Structure
 
-## Running Locally
-
-```bash
-npm i -g vercel
-vercel dev
+```
+backend/
+├── api/
+│   └── app.py         # Main Flask application
+├── requirements.txt   # Python dependencies
+├── vercel.json        # Vercel deployment configuration
+├── .env               # Environment variables (apikey and frontend-endpoint)
+└── README.md          # me
 ```
 
-Your Flask application is now available at `http://localhost:3000`.
+## Installation
 
-## One-Click Deploy
+### Prerequisites
+- Python 3.8 or higher
+- pip (Python package installer)
+- Google Gemini API key
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+### Setup
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+1. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Create environment file:**
+   Create a `.env` file in the backend root directory:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   FE_ENDPOINT=http://localhost:5173
+   ```
+
+3. **Get Google Gemini API Key:**
+   - Visit [Google AI Studio](https://aistudio.google.com/)
+   - Create a new API key
+   - Add it to your `.env` file
+
+4. **Run the application:**
+   ```bash
+   python api/app.py
+   ```
+
+The server will start on `http://localhost:5000`
+
+
+## File Validation
+
+The API enforces the following restrictions:
+- **File Type:** Only PDF files (`.pdf` extension)
+- **Content:** PDF must contain extractable text
+- **Size:** Handled by frontend (4MB max)
+
+## AI Prompt Configuration
+
+The Gemini AI is configured with specific instructions:
+
+### Roast Requirements
+- **Length:** 3 paragraphs maximum
+- **Structure:** 2 paragraphs general roast + 3-4 bullet points
+- **Tone:** Harsh but constructive
+- **Language:** Simple, high-school level vocabulary
+- **Focus:** Most glaring resume issues
+
+```
